@@ -1,1 +1,360 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이도원의 iPhone</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #d8dbe2;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: white;
+}
+
+.phone {
+  width: min(100%, 390px);
+  min-height: 780px;
+  height: min(850px, 100dvh);
+  padding: 18px 24px 24px;
+  border: 7px solid #222;
+  border-radius: 46px;
+  overflow-y: auto;
+  background: linear-gradient(160deg, #596b81, #222c43 52%, #10131c);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.status {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.island {
+  position: absolute;
+  top: 10px;
+  width: 105px;
+  height: 28px;
+  border-radius: 20px;
+  background: #080808;
+}
+
+.date {
+  margin-top: 52px;
+  font-size: 16px;
+  color: #e1e5ee;
+}
+
+.time {
+  font-size: 76px;
+  font-weight: 200;
+  letter-spacing: -4px;
+  margin: 3px 0 20px;
+}
+
+.notification {
+  width: 100%;
+  border-radius: 19px;
+  background: #ffffffd9;
+  color: #20232a;
+  padding: 14px;
+  cursor: pointer;
+  backdrop-filter: blur(15px);
+}
+
+.notice-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #686c73;
+  margin-bottom: 7px;
+}
+
+.app-symbol {
+  width: 23px;
+  height: 23px;
+  border-radius: 7px;
+  background: #75d66a;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+
+.notification strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.notification p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.hint {
+  font-size: 11px;
+  color: #e0e5ee;
+  margin: 12px 0 8px;
+  text-align: center;
+}
+
+.pass-dots {
+  display: flex;
+  gap: 13px;
+  margin: 15px 0 20px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.dot.filled { background: white; }
+
+.keypad {
+  width: 250px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 18px;
+}
+
+.key {
+  width: 68px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff25;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.key:active { background: #ffffff55; }
+
+.key small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin-top: 1px;
+}
+
+.action-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 22px;
+  font-size: 12px;
+}
+
+.action-row button {
+  background: none;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.error {
+  height: 18px;
+  font-size: 12px;
+  color: #ffd4d4;
+  margin-top: 4px;
+}
+
+#messages, #unlocked {
+  display: none;
+  width: 100%;
+}
+
+#messages {
+  color: #222;
+  background: #f7f7fa;
+  border-radius: 22px;
+  padding: 18px;
+  margin-top: 25px;
+}
+
+#messages h2 { margin-top: 0; }
+
+.bubble {
+  background: #e5e5eb;
+  border-radius: 16px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 10px 0;
+}
+
+.back {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+#unlocked {
+  text-align: center;
+  margin: auto 0;
+}
+
+#unlocked .emoji { font-size: 55px; }
+#unlocked h1 { font-size: 26px; }
+
+@media (max-height: 790px) {
+  .phone { min-height: 100dvh; border-radius: 0; border-width: 0; }
+}
+</style>
+</head>
+
+<body>
+<div class="phone" id="phone">
+
+  <div class="island"></div>
+
+  <div class="status">
+    <span>9:41</span>
+    <span>● ▮▮▮ ▰</span>
+  </div>
+
+  <div id="lockScreen">
+    <div class="date">10월 20일 화요일</div>
+    <div class="time">09:41</div>
+
+    <div class="notification" onclick="openMessages()">
+      <div class="notice-top">
+        <span class="app-symbol">●</span>
+        <span>메시지 · 지금</span>
+        <span style="margin-left:auto">알림 2개</span>
+      </div>
+      <strong>예은</strong>
+      <p>야 이 새끼야 연락 좀 받아라 제발.<br>
+      너 비밀번호 아직도 첫 방송 날짜로 해놨냐?<br>
+      6월 12일 그날을 아직도 못 잊냐고.</p>
+      <p style="margin-top:8px;color:#686c73">알림을 눌러 메시지 확인하기 ›</p>
+    </div>
+
+    <div class="hint">암호를 입력하세요</div>
+
+    <div class="pass-dots" id="dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <div class="keypad">
+      <button class="key" onclick="press(1)">1</button>
+      <button class="key" onclick="press(2)">2<small>ABC</small></button>
+      <button class="key" onclick="press(3)">3<small>DEF</small></button>
+      <button class="key" onclick="press(4)">4<small>GHI</small></button>
+      <button class="key" onclick="press(5)">5<small>JKL</small></button>
+      <button class="key" onclick="press(6)">6<small>MNO</small></button>
+      <button class="key" onclick="press(7)">7<small>PQRS</small></button>
+      <button class="key" onclick="press(8)">8<small>TUV</small></button>
+      <button class="key" onclick="press(9)">9<small>WXYZ</small></button>
+      <button class="key" onclick="clearPass()">⌫</button>
+      <button class="key" onclick="press(0)">0</button>
+      <button class="key" onclick="checkPass()">✓</button>
+    </div>
+
+    <div class="error" id="error"></div>
+
+    <div class="action-row">
+      <button onclick="openMessages()">메시지 확인</button>
+      <button onclick="clearPass()">암호 지우기</button>
+    </div>
+  </div>
+
+  <div id="messages">
+    <h2>‹ 메시지</h2>
+    <p style="color:#777;font-size:12px">예은 · 최근 대화</p>
+    <div class="bubble">
+      야 이 새끼야 연락 좀 받아라 제발<br>
+      도대체 몇 달째야 이게<br>
+      너 진짜 어디서 뭐 하는데
+    </div>
+    <div class="bubble">
+      너 비밀번호 아직도 첫 방송 날짜로 해놨냐?<br>
+      6월 12일 그날을 아직도 못 잊냐고.
+    </div>
+    <p style="font-size:12px;color:#777">
+      단서: 도원의 첫 방송 날짜는 6월 12일이다.
+    </p>
+    <button class="back" onclick="backToLock()">잠금 화면으로 돌아가기</button>
+  </div>
+
+  <div id="unlocked">
+    <div class="emoji">🔓</div>
+    <h1>잠금 해제</h1>
+    <p>이도원의 iPhone에 접근했습니다.</p>
+    <p style="color:#d6dbe5;font-size:13px">휴대폰의 기록을 확인할 수 있습니다.</p>
+  </div>
+
+</div>
+
+<script>
+let pass = "";
+
+function press(number) {
+  if (pass.length >= 4) return;
+  pass += number;
+  updateDots();
+
+  if (pass.length === 4) {
+    setTimeout(checkPass, 180);
+  }
+}
+
+function updateDots() {
+  document.querySelectorAll(".dot").forEach((dot, index) => {
+    dot.classList.toggle("filled", index < pass.length);
+  });
+}
+
+function clearPass() {
+  pass = "";
+  updateDots();
+  document.getElementById("error").textContent = "";
+}
+
+function checkPass() {
+  if (pass === "0612") {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("messages").style.display = "none";
+    document.getElementById("unlocked").style.display = "block";
+  } else {
+    document.getElementById("error").textContent = "암호가 올바르지 않습니다.";
+    pass = "";
+    updateDots();
+  }
+}
+
+function openMessages() {
+  document.getElementById("lockScreen").style.display = "none";
+  document.getElementById("messages").style.display = "block";
+}
+
+function backToLock() {
+  document.getElementById("messages").style.display = "none";
+  document.getElementById("lockScreen").style.display = "block";
+}
+</script>
+</body>
+</html>
+
